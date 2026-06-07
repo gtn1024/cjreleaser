@@ -1,0 +1,57 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            stdx_artifact: cangjie-stdx-linux-x64-1.1.3.1
+            stdx_dir: linux_x86_64_cjnative
+            stdx_ext: zip
+          - os: macos-latest
+            stdx_artifact: cangjie-stdx-mac-aarch64-1.1.3.1
+            stdx_dir: darwin_aarch64_cjnative
+            stdx_ext: zip
+            continue-on-error: true
+          - os: windows-latest
+            stdx_artifact: cangjie-stdx-windows-x64-1.1.3.1
+            stdx_dir: windows_x86_64_cjnative
+            stdx_ext: zip
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.continue-on-error || false }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Zxilly/setup-cangjie@v2
+        with:
+          channel: sts
+          version: 1.1.3
+      - name: install macOS dependencies
+        if: runner.os == 'macOS'
+        shell: bash
+        run: brew install libffi
+      - name: cache stdx
+        id: cache-stdx
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/cangjie-stdx
+          key: stdx-${{ matrix.stdx_artifact }}
+      - name: download stdx
+        if: steps.cache-stdx.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          curl -L -o stdx.zip "https://gitcode.com/Cangjie/cangjie_stdx/releases/download/v1.1.3.1/${{ matrix.stdx_artifact }}.${{ matrix.stdx_ext }}"
+          python3 -c "import zipfile,sys; zipfile.ZipFile('stdx.zip').extractall(sys.argv[1])" "${{ runner.temp }}/cangjie-stdx"
+      - name: build
+        shell: bash
+        run: |
+          export CANGJIE_STDX_PATH="$(echo '${{ runner.temp }}/cangjie-stdx/${{ matrix.stdx_dir }}/static/stdx' | sed 's|\\|/|g')"
+          cjpm build
+      - name: test
+        shell: bash
+        run: |
+          export CANGJIE_STDX_PATH="$(echo '${{ runner.temp }}/cangjie-stdx/${{ matrix.stdx_dir }}/static/stdx' | sed 's|\\|/|g')"
+          cjpm test
