@@ -1,0 +1,12 @@
+cjreleaser
+Copyright 2025 cjreleaser contributors
+
+This product includes software developed by third parties:
+
+- src/toml/ — TOML parser adapted from cjpm (Cangjie Package Manager)
+  Copyright (c) Huawei Technologies Co., Ltd. 2025.
+  Licensed under the Apache License, Version 2.0 with Runtime Library Exception.
+  Source: https://cangjie-lang.cn/
+
+- cjxe — Command line argument parser for Cangjie
+  Licensed under the Apache License, Version 2.0.

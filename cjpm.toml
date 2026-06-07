@@ -1,0 +1,36 @@
+[package]
+cjc-version = "1.1.3"
+name = "cjreleaser"
+version = "0.1.0"
+description = "Automated release tool for Cangjie monorepo packages"
+output-type = "executable"
+authors = ["cjreleaser"]
+
+[dependencies]
+cjxe = "0.3.0"
+termcolor = "1.0.0"
+
+[target.aarch64-unknown-linux-gnu]
+  compile-option = "-Woff unused -ldl"
+  [target.aarch64-unknown-linux-gnu.bin-dependencies]
+    path-option = [ "${CANGJIE_STDX_PATH}" ]
+
+[target.x86_64-unknown-linux-gnu]
+  compile-option = "-Woff unused -ldl"
+  [target.x86_64-unknown-linux-gnu.bin-dependencies]
+    path-option = [ "${CANGJIE_STDX_PATH}" ]
+
+[target.x86_64-w64-mingw32]
+  compile-option = "-Woff unused -lcrypt32"
+  [target.x86_64-w64-mingw32.bin-dependencies]
+    path-option = [ "${CANGJIE_STDX_PATH}" ]
+
+[target.aarch64-mac]
+  compile-option = "-Woff unused"
+  [target.aarch64-mac.bin-dependencies]
+    path-option = [ "${CANGJIE_STDX_PATH}" ]
+
+[target.x86_64-mac]
+  compile-option = "-Woff unused"
+  [target.x86_64-mac.bin-dependencies]
+    path-option = [ "${CANGJIE_STDX_PATH}" ]

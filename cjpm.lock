@@ -1,0 +1,5 @@
+version = 0
+
+[requires]
+  termcolor = {version = "1.0.0"}
+  cjxe = {version = "0.3.0"}
