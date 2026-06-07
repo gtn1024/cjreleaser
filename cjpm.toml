@@ -25,12 +25,12 @@ termcolor = "1.0.0"
   [target.x86_64-w64-mingw32.bin-dependencies]
     path-option = [ "${CANGJIE_STDX_PATH}" ]
 
-[target.aarch64-mac]
+[target.aarch64-apple-darwin]
   compile-option = "-Woff unused"
-  [target.aarch64-mac.bin-dependencies]
+  [target.aarch64-apple-darwin.bin-dependencies]
     path-option = [ "${CANGJIE_STDX_PATH}" ]
 
-[target.x86_64-mac]
+[target.x86_64-apple-darwin]
   compile-option = "-Woff unused"
-  [target.x86_64-mac.bin-dependencies]
+  [target.x86_64-apple-darwin.bin-dependencies]
     path-option = [ "${CANGJIE_STDX_PATH}" ]
