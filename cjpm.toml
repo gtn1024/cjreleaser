@@ -4,33 +4,10 @@ name = "cjreleaser"
 version = "0.1.0"
 description = "Automated release tool for Cangjie monorepo packages"
 output-type = "executable"
+link-option = "-lcangjie-dynamicLoader-opensslFFI -lstdx.net.tlsFFI -lstdx.crypto.x509FFI -lstdx.crypto.keysFFI -lstdx.encoding.jsonFFI -lstdx.encoding.json.streamFFI"
 authors = ["cjreleaser"]
 
 [dependencies]
 cjxe = "0.3.0"
 termcolor = "1.0.0"
-
-[target.aarch64-unknown-linux-gnu]
-  compile-option = "-Woff unused -ldl"
-  [target.aarch64-unknown-linux-gnu.bin-dependencies]
-    path-option = [ "${CANGJIE_STDX_PATH}" ]
-
-[target.x86_64-unknown-linux-gnu]
-  compile-option = "-Woff unused -ldl"
-  [target.x86_64-unknown-linux-gnu.bin-dependencies]
-    path-option = [ "${CANGJIE_STDX_PATH}" ]
-
-[target.x86_64-w64-mingw32]
-  compile-option = "-Woff unused -lcrypt32"
-  [target.x86_64-w64-mingw32.bin-dependencies]
-    path-option = [ "${CANGJIE_STDX_PATH}" ]
-
-[target.aarch64-apple-darwin]
-  compile-option = "-Woff unused"
-  [target.aarch64-apple-darwin.bin-dependencies]
-    path-option = [ "${CANGJIE_STDX_PATH}" ]
-
-[target.x86_64-apple-darwin]
-  compile-option = "-Woff unused"
-  [target.x86_64-apple-darwin.bin-dependencies]
-    path-option = [ "${CANGJIE_STDX_PATH}" ]
+stdx = "1.1.0"
